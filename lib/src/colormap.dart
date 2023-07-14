@@ -10,8 +10,11 @@ abstract class Colormap {
   // late Color colorUnder;
   // Color colorBad = const Color(0x00000000);
 
-  Vector4 call(double x, {double? alpha, bool bytes = false}) {
-    return _lookUpTable[(x * (n - 1)).round()];
+  Vector4 call(double x) {
+    if (x == 1) {
+      return _lookUpTable.last;
+    }
+    return _lookUpTable[(x * n).floor()];
   }
 
   Colormap reversed();
@@ -19,7 +22,7 @@ abstract class Colormap {
 
 
 class ListedColormap extends Colormap {
-  ListedColormap(List<Vector4> colors, {int? n = 256})
+  ListedColormap(List<Vector4> colors, {int? n})
     : super(n: n ?? colors.length) {
       if (n != null && n != colors.length) {
         if (n < colors.length) {
@@ -166,9 +169,9 @@ List<double> createLookupTableFromFunc(int n, SegCallable func) {
     for (int i = 0; i < n-1; i++) {
       // 現在の点の位置(0~1)
       final pointX = i / (n - 1);
-      lut.add(func(pointX));
+      lut.add(func(pointX).clamp(0.0, 1.0));
     }
-    lut.add(func(1)); // x = 1
+    lut.add(func(1).clamp(0.0, 1.0)); // x = 1
     return lut;
   }
 }
