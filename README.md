@@ -11,6 +11,10 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages).
 -->
 
+# color_map_dart
+
+[![pub package](https://img.shields.io/pub/v/color_map_dart.svg)](https://pub.dev/packages/color_map_dart)
+
 Colormaps for Dart/Flutter imported from Matplotlib.colormaps.
 
 ## Features
